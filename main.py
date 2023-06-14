@@ -142,8 +142,6 @@ def updateEmployee():
             
             conn.commit()
 
-
-
             response = jsonify('Employee updated sucessfully!')
             response.status_code = 200
 
@@ -160,16 +158,9 @@ def updateEmployee():
 def deleteEmployee(id):
     try:
         conn = mysql.connect()
-        cursor = conn.cursor()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
 
-        cursor.execute("SELECT name FROM employee_detail_lists WHERE id=",(id, ))
-        employeeName = cursor.fetchall()
-
-        print(employeeName)
-
-        # raise ValueError("Cannot divide by zero")
-        
-        # cursor.execute("DELETE FROM employee_detail_lists WHERE name =EMP", (id,))
+        cursor.execute("DELETE FROM employee_detail_lists WHERE name =EMP", (int(id),))
         conn.commit()
 
         response = jsonify('Todo deleted successfully!')
